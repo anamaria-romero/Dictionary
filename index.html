@@ -6,15 +6,41 @@
     <title>DICTIONARY</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<header>
-    <h1>TRADUCTOR</h1>
-</header>
 <body>
-<div class="container">
-    <label class="word" for="palabra">Palabra/Word</label><br>
-    <input class="word" type="text"><br>
-    <label for="Ingles">Ingles</label>
-    <label for="Español">Español</label>
-</div>
+    <header>
+        <h1>Traductor</h1>
+    </header>
+    <div class="container">
+        <form id="translator-form">
+            <label class="word-input" for="word-input">Palabra/Word</label><br>
+            <input class="word-area" type="text" id="word-input"  required><br>
+
+            <div class="language-options">
+                <label>
+                    <input type="radio" name="language" value="english"> Inglés
+                </label>
+                <label>
+                    <input type="radio" name="language" value="spanish" checked> Español
+                </label>
+            </div>
+            <button class="translate-btn" type="button" id="translate-btn">Traducir/Translate</button>
+        </form>
+        <div class="response-area" id="response-area">Response/Respuesta</div>
+
+        <h3 class="categories-title">Categorías</h3>
+        <div class="categories">
+            <label><input type="radio" name="category" value="animals"> Animales</label>
+            <label><input type="radio" name="category" value="fruits"> Frutas</label>
+            <label><input type="radio" name="category" value="colors"> Colores</label>
+            <label><input type="radio" name="category" value="physical_descriptions"> Descripciones</label>
+            <label><input type="radio" name="category" value="skills"> Habilidades</label>
+            <label><input type="radio" name="category" value="verbs" checked> Verbos</label>
+        </div>
+
+        <div class="words-area" id="words-area">Aquí irán la lista de palabras</div>
+        <button class="new-word-btn" id="new-word-btn">Nueva palabra</button>
+    </div>
+
+    <script src="script.js" type="module"></script>
 </body>
 </html>

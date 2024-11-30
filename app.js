@@ -1,41 +1,35 @@
-const person1 = {
-  name: 'Edwin',
-  lastname: 'Rozo',
-  age: 37,
-  hobbies: ['Futbol','Billar']
-}
+import { dictionary } from './dictionary.js';
 
-// const person2 = ['Edwin','Rozo', 37]
-// console.log(person2)
+const wordInput = document.getElementById('word-input');
+const translateBtn = document.getElementById('translate-btn');
+const responseArea = document.getElementById('response-area');
+const categories = document.querySelectorAll('.categories input');
+const wordsArea = document.getElementById('words-area');
 
+// Traducción
+translateBtn.addEventListener('click', () => {
+    const word = wordInput.value.toLowerCase();
+    const language = document.querySelector('input[name="language"]:checked').value;
 
-// // Destructuring
-// const { name, lastname } = person1
+    for (const category in dictionary.categories) {
+        const wordData = dictionary.categories[category].find(
+            (entry) => entry[language] && entry[language].toLowerCase() === word
+        );
+        if (wordData) {
+            responseArea.textContent = `${wordData.english} / ${wordData.spanish}`;
+            return;
+        }
+    }
+    responseArea.textContent = 'Palabra no encontrada / Word not found';
+});
 
-// const [value1, value3] = person2
-
-// const fichaAdso = [
-//   { name: 'Eusebio', rol: 'Backend' },
-//   { name: 'Sofia', rol: 'Backend' },
-//   { name: 'Andres', rol: 'Backend' },
-//   { name: 'Andrea', rol: 'Backend' }  
-// ]
-
-// const names = fichaAdso.filter(item => item.name.charAt(0) === 'A')
-// console.log(names)
-
-console.log(Object.keys(person1))
-console.log(Object.values(person1))
-console.log(Object.entries(person1))
-
-for (const key in object) {
-  if (Object.prototype.hasOwnProperty.call(object, key)) {
-    const element = object[key];
-    
-  }
-}
-
-for (const element of object) {
-  
-}
-
+// Mostrar palabras por categoría
+categories.forEach((radio) => {
+    radio.addEventListener('change', () => {
+        const category = radio.value;
+        const words = dictionary.categories[category];
+        wordsArea.innerHTML = words
+            .map((word) => `${word.english} / ${word.spanish}`)
+            .join('<br>');
+    });
+});
