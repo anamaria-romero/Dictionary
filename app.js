@@ -1,35 +1,71 @@
 import { dictionary } from './dictionary.js';
 
-const wordInput = document.getElementById('word-input');
-const translateBtn = document.getElementById('translate-btn');
-const responseArea = document.getElementById('response-area');
-const categories = document.querySelectorAll('.categories input');
-const wordsArea = document.getElementById('words-area');
+document.getElementById('translate-btn').addEventListener('click', () => {
 
-// Traducción
-translateBtn.addEventListener('click', () => {
-    const word = wordInput.value.toLowerCase();
-    const language = document.querySelector('input[name="language"]:checked').value;
+    const wordInput = document.getElementById('word-input').value.trim().toLowerCase();
+    const selectedLanguage = document.querySelector('input[name="language"]:checked').value;
+    const responseArea = document.getElementById('response-area');
+    const searchLanguage = selectedLanguage === 'english' ? 'spanish' : 'english';
+    const translationLanguage = selectedLanguage === 'english' ? 'english' : 'spanish';
 
-    for (const category in dictionary.categories) {
-        const wordData = dictionary.categories[category].find(
-            (entry) => entry[language] && entry[language].toLowerCase() === word
-        );
-        if (wordData) {
-            responseArea.textContent = `${wordData.english} / ${wordData.spanish}`;
-            return;
-        }
+    const result = Object.values(dictionary.categories)
+        .flat()
+        .find(word => word[searchLanguage].toLowerCase() === wordInput);
+
+    if (result) {
+        const translation = result[translationLanguage];
+        responseArea.textContent = `${translation} (${result.example})`;
+    } else {
+        responseArea.textContent = 'Palabra no encontrada.';
     }
-    responseArea.textContent = 'Palabra no encontrada / Word not found';
 });
 
-// Mostrar palabras por categoría
-categories.forEach((radio) => {
-    radio.addEventListener('change', () => {
-        const category = radio.value;
-        const words = dictionary.categories[category];
-        wordsArea.innerHTML = words
-            .map((word) => `${word.english} / ${word.spanish}`)
-            .join('<br>');
+document.querySelectorAll('input[name="category"]').forEach(categoryRadio => {
+    categoryRadio.addEventListener('change', () => {
+        const selectedCategory = categoryRadio.value;
+        const wordsArea = document.getElementById('words-area');
+        wordsArea.innerHTML = ''; 
+
+        dictionary.categories[selectedCategory].forEach(word => {
+            const wordElement = document.createElement('span');
+            wordElement.textContent = `${word.english} -> ${word.spanish}`;
+            wordElement.style.marginRight = "10px"; 
+            wordsArea.appendChild(wordElement);
+        });
     });
+});
+
+document.getElementById('new-word-form').addEventListener('submit', event => {
+    event.preventDefault(); 
+
+    const newWordEnglish = document.getElementById('new-word-english').value.trim();
+    const newWordSpanish = document.getElementById('new-word-spanish').value.trim();
+    const newWordExample = document.getElementById('new-word-example').value.trim();
+    const category = document.getElementById('new-word-category').value;
+
+    if (!newWordEnglish || !newWordSpanish || !newWordExample) {
+        alert('Por favor, completa todos los campos.');
+        return;
+    }
+
+    const newId = dictionary.categories[category].length + 1;
+
+    const newWord = {
+        id: newId,
+        english: newWordEnglish,
+        spanish: newWordSpanish,
+        example: newWordExample
+    };
+
+    dictionary.categories[category].push(newWord);
+
+    const wordsArea = document.getElementById('words-area');
+    if (document.querySelector(`input[name="category"][value="${category}"]`).checked) {
+        const wordElement = document.createElement('span');
+        wordElement.textContent = `${newWord.english} -> ${newWord.spanish}`;
+        wordElement.style.marginRight = "10px";
+        wordsArea.appendChild(wordElement);
+    }
+
+    document.getElementById('new-word-form').reset();
 });

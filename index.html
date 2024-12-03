@@ -8,8 +8,9 @@
 </head>
 <body>
     <header>
-        <h1>Traductor</h1>
+        <h1>TRADUCTOR</h1>
     </header>
+    <div class="container-father">
     <div class="container">
         <form id="translator-form">
             <label class="word-input" for="word-input">Palabra/Word</label><br>
@@ -38,9 +39,34 @@
         </div>
 
         <div class="words-area" id="words-area">Aquí irán la lista de palabras</div>
-        <button class="new-word-btn" id="new-word-btn">Nueva palabra</button>
-    </div>
 
-    <script src="script.js" type="module"></script>
+    </div>
+    <div class="new-word-container">
+        <h3>Añadir Nueva Palabra</h3> <br>
+        <form id="new-word-form">
+            <label for="new-word-english">Palabra en Inglés:</label>
+            <input type="text" id="new-word-english" required>
+            
+            <label for="new-word-spanish">Traducción al Español:</label>
+            <input type="text" id="new-word-spanish" required>
+            
+            <label for="new-word-example">Ejemplo:</label>
+            <input type="text" id="new-word-example" required>
+            
+            <label for="new-word-category">Categoría:</label>
+            <select id="new-word-category" required>
+                <option value="animals">Animales</option>
+                <option value="fruits">Frutas</option>
+                <option value="colors">Colores</option>
+                <option value="physical_descriptions">Descripciones</option>
+                <option value="skills">Habilidades</option>
+                <option value="verbs">Verbos</option>
+            </select>
+            
+            <button type="submit" class="new-word-btn">Nueva Palabra</button>
+        </form>
+    </div>    
+</div>
+    <script src="app.js" type="module"></script>
 </body>
 </html>

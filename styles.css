@@ -7,9 +7,6 @@
 
 body {
     background-color: rgb(252, 195, 205);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 header {
@@ -21,6 +18,14 @@ header {
     justify-content: center;
     align-items: center;
     font-size: 25px;
+}
+
+.container-father{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 50px;
+    gap: 20px;
 }
 
 .container {
@@ -35,6 +40,7 @@ header {
 .word-input{
     font-size: 17px;
 }
+
 .word-area{
     width: 90%;
     height: 30px;
@@ -75,17 +81,40 @@ header {
 .categories{
     margin: 25px;
 }
+
 .words-area{
     width: 90%;
-    height: 38px;
+    min-height: 90px; 
+    max-height: 300px; 
     margin-left: 30px;
     margin-top: 15px;
     background-color: rgb(233, 232, 232);
     border-radius: 5px;
+    padding: 10px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    overflow-y: auto; 
     font-size: 17px;
+    align-items: flex-start;
+    justify-content: center; 
+}
+
+.new-word-container {
+    border-radius: 15px;
+    background-color: white;
+    height: auto;
+    width: 600px;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+#new-word-form input,
+#new-word-form select {
+    width: 90%;
+    height: 30px;
+    margin: 13px;
+    margin-left: 30px;
 }
 
 .new-word-btn {
@@ -99,4 +128,9 @@ header {
     margin-left: 30px;
     margin-top: 15px;
     font-size: 17px;
+}
+.container, .new-word-container {
+    flex: 1;
+    max-width: 600px;
+    min-width: 300px;
 }
